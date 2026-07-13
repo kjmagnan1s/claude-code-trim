@@ -1,5 +1,7 @@
 # Trim mechanisms
 
+Verified against Claude Code v2.1.207, 2026-07. These are version-sensitive; if the CLI is much newer, spot-check the flags against `code.claude.com/docs` before relying on them.
+
 Every mechanism that removes payload from a Claude Code request, and the traps in each. All settings live in `~/.claude/settings.json` (every project) or `.claude/settings.json` (one project).
 
 ## Feature flags (broad first pass)

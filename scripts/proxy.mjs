@@ -1,6 +1,7 @@
 // Transparent logging proxy for the Anthropic API.
-// Forwards every request untouched, streams the reply back, and writes each
-// /v1/messages request body to CAPTURE_DIR. The CLI doesn't notice it's there.
+// Forwards every request untouched to UPSTREAM (the endpoint the user's CLI
+// normally talks to), streams the reply back, and writes each /v1/messages
+// request body to CAPTURE_DIR. The CLI doesn't notice it's there.
 //
 // Env: PORT (default 8787), UPSTREAM (default https://api.anthropic.com),
 //      CAPTURE_DIR (default ./captures)
@@ -8,6 +9,7 @@ import http from 'node:http';
 import https from 'node:https';
 import fs from 'node:fs';
 import path from 'node:path';
+import { pipeline } from 'node:stream';
 
 const PORT = Number(process.env.PORT || 8787);
 const UPSTREAM = process.env.UPSTREAM || 'https://api.anthropic.com';
@@ -16,6 +18,7 @@ fs.mkdirSync(CAPTURE_DIR, { recursive: true });
 let n = 0;
 
 const server = http.createServer((req, res) => {
+  req.on('error', () => {});
   const chunks = [];
   req.on('data', (c) => chunks.push(c));
   req.on('end', () => {
@@ -28,17 +31,21 @@ const server = http.createServer((req, res) => {
     }
 
     const upstream = new URL(req.url, UPSTREAM);
+    const client = upstream.protocol === 'http:' ? http : https;
     const headers = { ...req.headers, host: upstream.host };
-    const preq = https.request(
+    const preq = client.request(
       upstream,
       { method: req.method, headers },
       (pres) => {
         res.writeHead(pres.statusCode, pres.headers);
-        pres.pipe(res);
+        pipeline(pres, res, (err) => {
+          if (err) console.error(`[trim-proxy] response stream error: ${err.message}`);
+        });
       }
     );
     preq.on('error', (e) => {
-      res.writeHead(502, { 'content-type': 'text/plain' });
+      console.error(`[trim-proxy] upstream error: ${e.message}`);
+      if (!res.headersSent) res.writeHead(502, { 'content-type': 'text/plain' });
       res.end(`proxy error: ${e.message}`);
     });
     preq.end(body);

@@ -9,15 +9,7 @@
     {
       "name": "trim",
       "source": "./",
-      "description": "Profile Claude Code's real API payload, rank what each turn pays for, and apply disable flags, deny rules, and skillOverrides on approval.",
-      "version": "1.0.0",
-      "author": {
-        "name": "Kevin Magnan",
-        "url": "https://github.com/kjmagnan1s"
-      },
-      "homepage": "https://github.com/kjmagnan1s/claude-code-trim",
-      "repository": "https://github.com/kjmagnan1s/claude-code-trim",
-      "license": "MIT"
+      "description": "Profile Claude Code's real API payload, rank what each turn pays for, and apply disable flags, deny rules, and skillOverrides on approval."
     }
   ]
 }

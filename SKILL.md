@@ -9,7 +9,7 @@ Measure the payload Claude Code ships on every request, give each expensive segm
 
 Branches: full trim is the default (all steps). "What's eating my context?" → steps 1–4, report, stop. "Apply this list I already have" → steps 5–7.
 
-All script paths below are relative to this skill's `scripts/` folder. Work in the scratchpad for captures and patches.
+Before step 2, resolve this skill's own directory (the folder containing this SKILL.md; installed as a plugin that is `$CLAUDE_PLUGIN_ROOT`, not the project cwd) and invoke every `scripts/…` command below by absolute path from it. Work in the scratchpad for captures and patches.
 
 ## 1. Baseline
 
@@ -43,21 +43,19 @@ Assign every segment of ~200 est tokens or more a verdict: **cut**, **keep**, or
 
 ## 5. Propose and gate
 
-Show the ranked verdict table (segment, ~tokens, verdict, mechanism, why), flag that it reflects baseline injection only (contextually loaded tools are not in it), then AskUserQuestion: apply which verdicts (recommended cuts / everything / let me pick) and which scope (`~/.claude/settings.json` global vs `.claude/settings.json` project).
+Build the approved-candidate patch as JSON in the scratchpad first, deny list as BARE tool names only. Show the ranked verdict table (segment, ~tokens, verdict, mechanism, why) AND the exact patch JSON that will be merged, flag that the ranking reflects baseline injection only (contextually loaded tools are not in it), then AskUserQuestion: apply which verdicts (recommended cuts / everything / let me pick) and which scope (`~/.claude/settings.json` global, `.claude/settings.json` project, or `.claude/settings.local.json` project-personal).
 
-This is a gate. STOP until answered; no settings write of any kind before the answer.
-**Done when:** an explicit approval and scope are recorded.
+This is a gate. STOP until answered; no settings write of any kind before the answer. If the user narrows the selection, rebuild the patch and show it again before writing.
+**Done when:** an explicit approval and scope are recorded for the exact patch JSON that was shown.
 
 ## 6. Apply
 
-Build the approved patch as JSON in the scratchpad, deny list as BARE tool names only, then:
-
 ```bash
-node scripts/apply.mjs <settings.json path> <patch.json path>
+node scripts/apply.mjs <settings path> <patch.json path>
 ```
 
-It backs up first and deep-merges, so existing settings survive.
-**Done when:** apply.mjs printed both a backup path and a written path.
+It backs up first and deep-merges, so existing settings survive. Confirm the keys it reports changed match the approved patch. If it refuses because the existing settings file is not valid JSON (hand-edited comments or trailing commas), nothing was written: tell the user which file is malformed and stop; do not hand-edit their settings to recover.
+**Done when:** apply.mjs printed a backup path, a written path, and changed keys matching the approved patch.
 
 ## 7. Re-measure
 

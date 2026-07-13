@@ -1,0 +1,23 @@
+{
+  "model": "claude-haiku-4-5-20251001",
+  "system": [
+    { "type": "text", "text": "You are Claude Code, Anthropic's official CLI." },
+    { "type": "text", "text": "A long system block with feature instructions. Padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding." }
+  ],
+  "tools": [
+    { "name": "Workflow", "description": "Execute a workflow script that orchestrates multiple subagents", "input_schema": { "type": "object", "properties": { "script": { "type": "string", "description": "very long schema text very long schema text very long schema text very long schema text" } } } },
+    { "name": "NotebookEdit", "description": "Edit jupyter notebooks", "input_schema": { "type": "object" } },
+    { "name": "mcp__claude_ai_Gmail__search_threads", "description": "Search gmail threads", "input_schema": { "type": "object" } },
+    { "name": "mcp__someserver__do_thing", "description": "An MCP server tool", "input_schema": { "type": "object" } },
+    { "name": "Skill", "description": "Execute a skill", "input_schema": { "type": "object" } }
+  ],
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        { "type": "text", "text": "<system-reminder>The following skills are available for use with the Skill tool: dataviz, review, init, and many more catalogue entries. This block is padded well past the four hundred byte threshold so the analyzer registers it as a first-turn injection segment: padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding.</system-reminder>" },
+        { "type": "text", "text": "Reply with exactly: ok" }
+      ]
+    }
+  ]
+}

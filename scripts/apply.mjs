@@ -12,10 +12,19 @@ if (!settingsPath || !patchPath) {
   process.exit(1);
 }
 
-const patch = JSON.parse(fs.readFileSync(patchPath, 'utf8'));
+function readJson(p, label) {
+  try {
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch (e) {
+    console.error(`${label} at ${p} is not valid JSON (${e.message}). Fix it or move it aside; nothing was written.`);
+    process.exit(1);
+  }
+}
+
+const patch = readJson(patchPath, 'patch');
 let current = {};
 if (fs.existsSync(settingsPath)) {
-  current = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+  current = readJson(settingsPath, 'settings file');
   const backup = `${settingsPath}.bak-${Date.now()}`;
   fs.copyFileSync(settingsPath, backup);
   console.log(`backup: ${backup}`);
@@ -36,3 +45,5 @@ function merge(base, over) {
 const merged = merge(current, patch);
 fs.writeFileSync(settingsPath, JSON.stringify(merged, null, 2) + '\n');
 console.log(`written: ${settingsPath}`);
+console.log(`keys changed: ${Object.keys(patch).join(', ')}`);
+if (patch.permissions?.deny) console.log(`deny additions: ${patch.permissions.deny.join(', ')}`);

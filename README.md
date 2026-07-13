@@ -27,7 +27,7 @@ Pick one method; a plugin install and a skills-dir copy with the same name shado
 
 Either way, open any project and type `/trim` (installed as a plugin it appears as `/trim:trim`), or ask "what's eating my context window."
 
-Requirements: Claude Code and Node (which Claude Code already requires), plus bash and `lsof` (macOS and Linux; on Windows use WSL or Git Bash). No npm dependencies.
+Requirements: Claude Code, Node (which Claude Code already requires), and bash. macOS and Linux work out of the box; on Windows use WSL. No npm dependencies.
 
 ## How it works
 
@@ -38,6 +38,12 @@ Requirements: Claude Code and Node (which Claude Code already requires), plus ba
 5. Gate: you approve the cuts and pick the scope (global or project settings).
 6. Apply: deep-merges the patch into settings.json with a timestamped backup first.
 7. Re-measure: reports the before/after token delta.
+
+## Undo and uninstall
+
+Every apply writes a timestamped backup next to your settings file first (`settings.json.bak-<timestamp>`); restore it to undo a trim, or delete the added keys by hand. Your current session keeps its old payload either way until you restart it.
+
+To remove the tool itself: `/plugin uninstall trim@claude-code-trim`, or `rm -rf ~/.claude/skills/trim` if you installed by clone.
 
 ## Privacy
 

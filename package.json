@@ -5,6 +5,9 @@
   "bin": {
     "claude-code-trim": "./scripts/install.mjs"
   },
+  "scripts": {
+    "test": "node --test"
+  },
   "repository": "github:kjmagnan1s/claude-code-trim",
   "author": "Kevin Magnan (https://github.com/kjmagnan1s)",
   "license": "MIT"

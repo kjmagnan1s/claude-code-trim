@@ -96,17 +96,24 @@ firstBlocks.forEach((b, i) => {
 
 segments.sort((a, b) => b.bytes - a.bytes);
 
+if (segments.length === 0) {
+  console.error('[trim] no segments found; capture looks degenerate (no tools/system/injections)');
+  process.exit(1);
+}
+
+const captureBytes = fs.statSync(capturePath).size;
 const totals = {
   model: body.model,
   toolCount: (body.tools || []).length,
   totalBytes: segments.reduce((s, x) => s + x.bytes, 0),
+  captureBytes,
   estTokens: segments.reduce((s, x) => s + x.estTokens, 0),
 };
 
 fs.writeFileSync(outPath, JSON.stringify({ totals, segments }, null, 2));
 
 console.log(
-  `[trim] ${totals.toolCount} tools · ${totals.totalBytes.toLocaleString()} payload bytes · ~${totals.estTokens.toLocaleString()} est tokens (model: ${totals.model})`
+  `[trim] ${totals.toolCount} tools · ${totals.totalBytes.toLocaleString()} of ${captureBytes.toLocaleString()} capture bytes counted · ~${totals.estTokens.toLocaleString()} est tokens (model: ${totals.model})`
 );
 console.log(`${'segment'.padEnd(44)} ${'kind'.padEnd(18)} ${'bytes'.padStart(8)} ${'~tok'.padStart(7)}`);
 for (const s of segments.slice(0, 40)) {
