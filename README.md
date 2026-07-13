@@ -1,6 +1,6 @@
 # trim
 
-![trim hero](assets/hero.png)
+![trim hero](assets/hero.jpg)
 
 A Claude Code skill that finds and removes the bloat in your per-request payload: tool definitions, skill catalogues, and feature instructions you never use.
 
