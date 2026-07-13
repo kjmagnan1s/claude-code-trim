@@ -6,11 +6,20 @@ A Claude Code skill that finds and removes the bloat in your per-request payload
 
 ## Install
 
+As a plugin (recommended), from inside any Claude Code session:
+
+```
+/plugin marketplace add kjmagnan1s/claude-code-trim
+/plugin install trim@claude-code-trim
+```
+
+Or as a personal skill:
+
 ```bash
 git clone https://github.com/kjmagnan1s/claude-code-trim.git ~/.claude/skills/trim
 ```
 
-Claude Code discovers skills in `~/.claude/skills/` automatically. Open any project and type `/trim`, or ask "what's eating my context window."
+Either way, open any project and type `/trim` (installed as a plugin it appears as `/trim:trim`), or ask "what's eating my context window."
 
 Requirements: Claude Code and Node (which Claude Code already requires), plus bash and `lsof` (macOS and Linux; on Windows use WSL or Git Bash). No npm dependencies.
 
