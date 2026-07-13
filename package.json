@@ -1,14 +1,14 @@
 {
-  "name": "claude-code-trim",
+  "name": "trim-hero",
   "version": "1.0.0",
-  "description": "One-line installer for the trim Claude Code plugin: profile the real API payload and cut the bloat.",
+  "description": "One-line installer for Trim Hero, the Claude Code context-bloat plugin: profile the real API payload and cut the bloat.",
   "bin": {
-    "claude-code-trim": "./scripts/install.mjs"
+    "trim-hero": "./scripts/install.mjs"
   },
   "scripts": {
     "test": "node --test"
   },
-  "repository": "github:kjmagnan1s/claude-code-trim",
+  "repository": "github:kjmagnan1s/trim-hero",
   "author": "Kevin Magnan (https://github.com/kjmagnan1s)",
   "license": "MIT"
 }

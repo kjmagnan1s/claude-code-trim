@@ -1,5 +1,5 @@
 {
-  "name": "claude-code-trim",
+  "name": "trim-hero",
   "owner": {
     "name": "Kevin Magnan",
     "url": "https://github.com/kjmagnan1s"
@@ -7,7 +7,7 @@
   "description": "Context payload trimming for Claude Code",
   "plugins": [
     {
-      "name": "trim",
+      "name": "trim-hero",
       "source": "./",
       "description": "Profile Claude Code's real API payload, rank what each turn pays for, and apply disable flags, deny rules, and skillOverrides on approval."
     }

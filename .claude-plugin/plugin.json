@@ -1,14 +1,14 @@
 {
-  "name": "trim",
-  "displayName": "Trim",
+  "name": "trim-hero",
+  "displayName": "Trim Hero",
   "version": "1.0.0",
   "description": "Find and remove the bloat in Claude Code's per-request payload: profile the real API payload, rank what each turn pays for, and apply disable flags, deny rules, and skillOverrides on approval.",
   "author": {
     "name": "Kevin Magnan",
     "url": "https://github.com/kjmagnan1s"
   },
-  "homepage": "https://github.com/kjmagnan1s/claude-code-trim",
-  "repository": "https://github.com/kjmagnan1s/claude-code-trim",
+  "homepage": "https://github.com/kjmagnan1s/trim-hero",
+  "repository": "https://github.com/kjmagnan1s/trim-hero",
   "license": "MIT",
   "keywords": ["context", "tokens", "system-prompt", "optimization", "settings"]
 }

@@ -1,4 +1,4 @@
-# trim
+# Trim Hero
 
 ![trim hero](assets/hero.jpg)
 
@@ -9,23 +9,23 @@ A Claude Code skill that finds and removes the bloat in your per-request payload
 One line:
 
 ```bash
-npx github:kjmagnan1s/claude-code-trim
+npx github:kjmagnan1s/trim-hero
 ```
 
-This installs trim as a managed plugin via the Claude Code CLI, or falls back to a `~/.claude/skills/` clone if the CLI is unavailable. Prefer doing it yourself? Either path works on its own:
+This installs Trim Hero as a managed plugin via the Claude Code CLI, or falls back to a `~/.claude/skills/` clone if the CLI is unavailable. Prefer doing it yourself? Either path works on its own:
 
 ```
-/plugin marketplace add kjmagnan1s/claude-code-trim
-/plugin install trim@claude-code-trim
+/plugin marketplace add kjmagnan1s/trim-hero
+/plugin install trim-hero@trim-hero
 ```
 
 ```bash
-git clone https://github.com/kjmagnan1s/claude-code-trim.git ~/.claude/skills/trim
+git clone https://github.com/kjmagnan1s/trim-hero.git ~/.claude/skills/trim
 ```
 
 Pick one method; a plugin install and a skills-dir copy with the same name shadow each other.
 
-Either way, open any project and type `/trim` (installed as a plugin it appears as `/trim:trim`), or ask "what's eating my context window."
+Either way, open any project and type `/trim-hero` (installed as a plugin it appears as `/trim-hero:trim-hero`), or ask "what's eating my context window."
 
 Requirements: Claude Code, Node (which Claude Code already requires), and bash. macOS and Linux work out of the box; on Windows use WSL. No npm dependencies.
 
@@ -43,7 +43,7 @@ Requirements: Claude Code, Node (which Claude Code already requires), and bash. 
 
 Every apply writes a timestamped backup next to your settings file first (`settings.json.bak-<timestamp>`); restore it to undo a trim, or delete the added keys by hand. Your current session keeps its old payload either way until you restart it.
 
-To remove the tool itself: `/plugin uninstall trim@claude-code-trim`, or `rm -rf ~/.claude/skills/trim` if you installed by clone.
+To remove the tool itself: `/plugin uninstall trim-hero@trim-hero`, or `rm -rf ~/.claude/skills/trim` if you installed by clone.
 
 ## Privacy
 
@@ -51,4 +51,4 @@ Everything stays on your machine. The capture file contains your own request pay
 
 ## Credits
 
-The measure-then-cut workflow this skill packages comes from Matt Pocock ([@mattpocock](https://x.com/mattpocockuk)) and his article [How to kill the bloat in Claude Code's system prompt](https://www.aihero.dev/how-to-kill-the-bloat-in-claude-codes-system-prompt) at aihero.dev. This skill wraps that process (proxy capture, payload analysis, settings.json mechanisms) into a single `/trim` command.
+The measure-then-cut workflow this skill packages comes from Matt Pocock ([@mattpocock](https://x.com/mattpocockuk)) and his article [How to kill the bloat in Claude Code's system prompt](https://www.aihero.dev/how-to-kill-the-bloat-in-claude-codes-system-prompt) at aihero.dev. This skill wraps that process (proxy capture, payload analysis, settings.json mechanisms) into a single `/trim-hero` command.

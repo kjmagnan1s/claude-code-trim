@@ -1,9 +1,9 @@
 ---
-name: trim
-description: Trim Claude Code context bloat by profiling the real API payload, ranking what each turn pays for, and applying disable flags / deny rules / skillOverrides on approval. Use when the user asks what is eating their context window or tokens per turn, wants the system prompt or tool payload smaller, or types /trim.
+name: trim-hero
+description: Trim Claude Code context bloat by profiling the real API payload, ranking what each turn pays for, and applying disable flags / deny rules / skillOverrides on approval. Use when the user asks what is eating their context window or tokens per turn, wants the system prompt or tool payload smaller, or types /trim-hero.
 ---
 
-# Trim
+# Trim Hero
 
 Measure the payload Claude Code ships on every request, give each expensive segment a verdict, and write the trim into settings.json behind an approval gate. Scripts do the arithmetic; you do the judgment.
 
