@@ -60,4 +60,12 @@ It backs up first and deep-merges, so existing settings survive. Confirm the key
 ## 7. Re-measure
 
 Run `claude -p "/context"` from the target dir again (child runs reload settings immediately) and report the before/after delta. Tell the user the current interactive session keeps its old payload until they restart it.
-**Done when:** the delta is reported with the baseline-injection caveat, and the restart note is delivered.
+
+Then offer the shareable receipt card. On a yes:
+
+```bash
+node scripts/receipt.mjs --tools-before N --tools-after N --tokens-before N --tokens-after N --out <scratchpad>/trim-receipt.svg
+```
+
+Numbers come from your own step 2/3 measurements (before) and this step's re-measure (after). Rasterize the SVG to PNG with whatever the machine has, in order: headless Chrome (`--headless --screenshot=<out.png> --window-size=1200,675 --force-device-scale-factor=2 file://<card.svg>`), `rsvg-convert`, or `magick`; if none exists, hand over the SVG and say so. Send the user the image.
+**Done when:** the delta is reported with the baseline-injection caveat, the restart note is delivered, and the receipt card was offered (delivered on a yes, or declined).

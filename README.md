@@ -20,7 +20,7 @@ This installs Trim Hero as a managed plugin via the Claude Code CLI, or falls ba
 ```
 
 ```bash
-git clone https://github.com/kjmagnan1s/trim-hero.git ~/.claude/skills/trim
+git clone https://github.com/kjmagnan1s/trim-hero.git ~/.claude/skills/trim-hero
 ```
 
 Pick one method; a plugin install and a skills-dir copy with the same name shadow each other.
@@ -39,11 +39,15 @@ Requirements: Claude Code, Node (which Claude Code already requires), and bash. 
 6. Apply: deep-merges the patch into settings.json with a timestamped backup first.
 7. Re-measure: reports the before/after token delta.
 
+## Share your receipt
+
+After a trim, the skill offers a receipt card: your before/after tool count and tokens per request on a 1200x675 dark card, ready to post. Generated locally by `scripts/receipt.mjs` (SVG, zero dependencies) and rasterized to PNG with whatever your machine has (headless Chrome, rsvg-convert, or ImageMagick).
+
 ## Undo and uninstall
 
 Every apply writes a timestamped backup next to your settings file first (`settings.json.bak-<timestamp>`); restore it to undo a trim, or delete the added keys by hand. Your current session keeps its old payload either way until you restart it.
 
-To remove the tool itself: `/plugin uninstall trim-hero@trim-hero`, or `rm -rf ~/.claude/skills/trim` if you installed by clone.
+To remove the tool itself: `/plugin uninstall trim-hero@trim-hero`, or `rm -rf ~/.claude/skills/trim-hero` if you installed by clone.
 
 ## Privacy
 

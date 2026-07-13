@@ -97,3 +97,24 @@ test('apply: malformed settings refused, file untouched', () => {
   const backups = fs.readdirSync(dir).filter((f) => f.startsWith('settings.json.bak-'));
   assert.equal(backups.length, 0, 'no backup of a file that was never parsed');
 });
+
+test('receipt: renders card with numbers, deltas, and command', () => {
+  const dir = tmp();
+  const out = path.join(dir, 'receipt.svg');
+  const r = run('receipt.mjs', [
+    '--tools-before', '156', '--tools-after', '94',
+    '--tokens-before', '92267', '--tokens-after', '57824',
+    '--date', '2026-07-13', '--out', out,
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const svg = fs.readFileSync(out, 'utf8');
+  for (const s of ['156', '94', '~92k', '~58k', '-40%', '-37%', 'npx github:kjmagnan1s/trim-hero', '2026-07-13', '</svg>']) {
+    assert.ok(svg.includes(s), `missing ${s}`);
+  }
+});
+
+test('receipt: refuses missing or non-numeric args', () => {
+  const r = run('receipt.mjs', ['--tools-before', '156']);
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /usage/);
+});
