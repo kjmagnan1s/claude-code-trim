@@ -147,6 +147,44 @@ test('apply: refuses writing outside a .claude settings file', () => {
   assert.equal(fs.readFileSync(settings, 'utf8'), '# my shell rc\n', 'destination untouched');
 });
 
+test('apply: refuses non-disabling trim values', () => {
+  const { dir, cdir } = claudeDir();
+  const settings = path.join(cdir, 'settings.json');
+  const patch = path.join(dir, 'patch.json');
+  const original = JSON.stringify({ skillOverrides: { dataviz: 'off' } });
+  fs.writeFileSync(settings, original);
+
+  const badPatches = [
+    { disableWorkflows: false },
+    { disableRemoteControl: 'yes' },
+    { skillOverrides: null },
+    { skillOverrides: 'off' },
+    { skillOverrides: { dataviz: 'on' } },
+  ];
+  for (const bad of badPatches) {
+    fs.writeFileSync(patch, JSON.stringify(bad));
+    const r = run('apply.mjs', [settings, patch]);
+    assert.equal(r.status, 1, `must refuse ${JSON.stringify(bad)}`);
+    assert.match(r.stderr, /must be/);
+    assert.equal(fs.readFileSync(settings, 'utf8'), original, 'settings untouched');
+  }
+});
+
+test('apply: refuses a symlinked settings destination', () => {
+  const { dir, cdir } = claudeDir();
+  const outside = path.join(dir, 'outside.json');
+  fs.writeFileSync(outside, '{}');
+  const settings = path.join(cdir, 'settings.json');
+  fs.symlinkSync(outside, settings);
+  const patch = path.join(dir, 'patch.json');
+  fs.writeFileSync(patch, JSON.stringify({ disableWorkflows: true }));
+
+  const r = run('apply.mjs', [settings, patch]);
+  assert.equal(r.status, 1, 'must refuse a symlink aliasing a non-settings file');
+  assert.match(r.stderr, /refusing to write/);
+  assert.equal(fs.readFileSync(outside, 'utf8'), '{}', 'symlink target untouched');
+});
+
 test('receipt: renders card with numbers, deltas, and command', () => {
   const dir = tmp();
   const out = path.join(dir, 'receipt.svg');
