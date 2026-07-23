@@ -2,7 +2,7 @@
 
 Verified against Claude Code v2.1.207, 2026-07. These are version-sensitive; if the CLI is much newer, spot-check the flags against `code.claude.com/docs` before relying on them.
 
-Every mechanism that removes payload from a Claude Code request, and the traps in each. All settings live in `~/.claude/settings.json` (every project) or `.claude/settings.json` (one project).
+Every mechanism that removes payload from a Claude Code request, and the traps in each. All settings live in `~/.claude/settings.json` (every project), `.claude/settings.json` (one project), or `.claude/settings.local.json` (one project, personal); `scripts/apply.mjs` refuses to write anywhere else.
 
 ## Feature flags (broad first pass)
 
@@ -32,6 +32,8 @@ Four values, per skill:
 - `"off"` — removed from the payload entirely.
 
 `"user-invocable-only"` is the sweet spot for skills the user fires by hand; the model pays nothing for them.
+
+`scripts/apply.mjs` writes only `"off"` — it enforces disable-only values (SKILL.md step 6). To recommend `"name-only"` or `"user-invocable-only"`, hand the user the exact settings edit to make themselves; do not put those values in the patch.
 
 ## MCP servers and plugins
 
