@@ -88,7 +88,7 @@ firstBlocks.forEach((b, i) => {
     bytes,
     estTokens: est(bytes),
     mechanism: isSkills
-      ? 'skills catalogue: disableBundledSkills, skillOverrides ("off" | "user-invocable-only" | "name-only"), or uninstall plugins'
+      ? 'skills catalogue: disableBundledSkills, skillOverrides (apply.mjs patches only "off"; "user-invocable-only" / "name-only" are hand edits — see references/mechanisms.md), or uninstall plugins'
       : 'injected context (CLAUDE.md / MCP instructions / hooks): trim the source file, disconnect the server, or remove the hook',
     preview: text.slice(0, 100).replace(/\s+/g, ' '),
   });

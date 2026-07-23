@@ -54,7 +54,7 @@ This is a gate. STOP until answered; no settings write of any kind before the an
 node scripts/apply.mjs <settings path> <patch.json path>
 ```
 
-It backs up first and deep-merges, so existing settings survive. Confirm the keys it reports changed match the approved patch. If it refuses because the existing settings file is not valid JSON (hand-edited comments or trailing commas), nothing was written: tell the user which file is malformed and stop; do not hand-edit their settings to recover.
+It backs up first and deep-merges, so existing settings survive. The gate is enforced in code, not just here: apply.mjs refuses any patch key that is not a trim mechanism (only disable flags, `permissions.deny` bare names, and `skillOverrides` are writable; `permissions.allow`, `hooks`, `env`, and `model` are rejected; values are disable-only — flags must be `true` and skillOverrides values `"off"`, so re-enabling goes through the backup, never this script) and refuses any destination that is not a `.claude/settings.json`, `.claude/settings.local.json`, or the global `~/.claude/settings.json`. Confirm the keys it reports changed match the approved patch. If it refuses because the existing settings file is not valid JSON (hand-edited comments or trailing commas), nothing was written: tell the user which file is malformed and stop; do not hand-edit their settings to recover.
 **Done when:** apply.mjs printed a backup path, a written path, and changed keys matching the approved patch.
 
 ## 7. Re-measure
